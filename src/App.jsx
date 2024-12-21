@@ -14,7 +14,7 @@ function App() {
       <>
       
       <BrowserRouter>
-       <Nav/>
+   
        <Routes>
        
         <Route path="/" element ={<HomePage />}></Route>
@@ -24,7 +24,7 @@ function App() {
         
        </Routes>
       
-       <Footer/>
+     
        </BrowserRouter>
         
       
