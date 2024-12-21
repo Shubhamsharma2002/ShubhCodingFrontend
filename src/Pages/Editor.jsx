@@ -1,7 +1,8 @@
 import React from 'react'
 import Editornav from '../Components/Navbar/Editornav'
 
-function Editor() {
+import Editor from '@monaco-editor/react';
+function EditorLayout() {
   return ( 
     <>
     <Editornav/>
@@ -14,6 +15,7 @@ function Editor() {
               <div  className="tab cursor-pointer p-[6px] bg-[#1E1E1E] px-[10px] text-[15px]">JavaScript</div>
             </div>
         </div>
+        <Editor height="90vh" defaultLanguage="javascript" theme='vs-dark' defaultValue="// some comment" />;
         </div>
         <iframe
             id="iframe"
@@ -26,4 +28,4 @@ function Editor() {
   )
 }
 
-export default Editor
+export default EditorLayout

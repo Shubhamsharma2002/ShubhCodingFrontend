@@ -7,7 +7,8 @@ import HomePage from './Pages/HomePage';
 import ErrorPage from './Pages/ErrorPage';
 import SignupPage from './Pages/SignupPage';
 import LoginPage from './Pages/LoginPage';
-import Editor from './Pages/Editor';
+import EditorLayout from './Pages/Editor';
+
 
 function App() {
  
@@ -22,7 +23,8 @@ function App() {
         <Route path="*" element={<ErrorPage/>}></Route>
         <Route path="/signup" element={<SignupPage/>}></Route>
         <Route path="/login" element={<LoginPage/>}></Route>
-        <Route path="/editor/:projectId" element={<Editor/>}></Route>
+        <Route path="/editor/:projectId" element={<EditorLayout/>}></Route>
+
          
         
        </Routes>
