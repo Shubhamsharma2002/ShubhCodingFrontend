@@ -15,6 +15,7 @@ function EditorLayout() {
               <div  className="tab cursor-pointer p-[6px] bg-[#1E1E1E] px-[10px] text-[15px]">JavaScript</div>
             </div>
         </div>
+        {/* react edtio */}
         <Editor height="90vh" defaultLanguage="javascript" theme='vs-dark' defaultValue="// some comment" />;
         </div>
         <iframe
