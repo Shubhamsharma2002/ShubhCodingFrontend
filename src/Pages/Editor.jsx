@@ -5,6 +5,7 @@ import Editor from '@monaco-editor/react';
 function EditorLayout() {
   return ( 
     <>
+    {/* nav editor */}
     <Editornav/>
     <div className="flex">
         <div className='left w-[50%]'>
