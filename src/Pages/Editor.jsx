@@ -17,6 +17,7 @@ function EditorLayout() {
             </div>
         </div>
         {/* react edtio */}
+         {/* react edtio */}
         <Editor height="90vh" defaultLanguage="javascript" theme='vs-dark' defaultValue="// some comment" />;
         </div>
         <iframe
