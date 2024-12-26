@@ -1,12 +1,36 @@
 import React, { useState } from 'react'
 import codeLogo from '../../Images/CodeLogo.jpg'
 import deletLogo from '../../Images/DeleteLogo.png'
+import { api_base_url } from '../../Helper';
+import { useNavigate } from 'react-router-dom';
 function ListLayout({item}) {
+  const navigate = useNavigate();
   const [isDeleteModelShow, setIsDeleteModelShow] = useState(false);
+  const deleteProj = (id) => {
+    fetch(api_base_url + "/project/deleteProject",{
+      mode: "cors",
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        progId: id,
+        userId: localStorage.getItem("userId")
+      })
+    }).then(res=>res.json()).then(data=>{
+      if(data.success){
+        setIsDeleteModelShow(false)
+        window.location.reload()
+      }else{
+        alert(data.message)
+        setIsDeleteModelShow(false)
+      }
+    })
+  }
   return (
     <>
      <div className="listCard mb-2 w-[full] flex items-center justify-between p-[10px] bg-[#141414] cursor-pointer rounded-lg hover:bg-[#202020]">
-         <div className='flex items-center gap-2'>
+         <div onClick={()=>{navigate(`/editor/${item._id}`)}} className='flex items-center gap-2'>
             <img src={codeLogo} alt="" className='w-[80px]'/>
             <div>
             <h3 className='text-[20px]'>{item.title}</h3>
