@@ -1,13 +1,69 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Nav from '../Components/Navbar/Nav'
 import Footer from '../Components/Footer/Footer'
 import GridLayout from '../Components/Layouts/GridLayout'
 import ListLayout from '../Components/Layouts/ListLayout'
+import { useNavigate } from 'react-router-dom'
+import { api_base_url } from '../Helper'
 
 function HomePage() {
   const [isGridlayout , setgridLayout] = useState(true)
   const [isCreateModelShow, setIsCreateModelShow] = useState(false);
   const [projTitle, setProjTitle] = useState("");
+  const [data, setData] = useState(null);
+  const navigate = useNavigate();
+  const createProj = (e) => {
+    if (projTitle === "") {
+      alert("Please Enter Project Title");
+    } else {
+      fetch(api_base_url + "/project/createProject", {
+        mode: "cors",
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: projTitle,
+          userId: localStorage.getItem("userId")
+        })
+      }).then(res => res.json()).then(data => {
+        if (data.success) {
+          setIsCreateModelShow(false);
+          setProjTitle("");
+          alert("Project Created Successfully");
+          navigate(`/editor/${data.projectId}`);
+        } else {
+          alert("Something Went Wrong");
+        }
+      });
+    }
+  };
+
+  const getALLProj = () => {
+    fetch(api_base_url + "/project/getAllProjects", {
+      mode: "cors",
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: localStorage.getItem("userId")
+      })
+    }).then(res => res.json()).then(data => {
+      if (data.success) {
+        console.log(data)
+        setData(data.projects);
+      } else {
+        setError(data.message);
+      }
+    });
+  };
+
+  useEffect(() => {
+    getALLProj();
+  }, []);
+
+
   return (
     <>
     <Nav/>
@@ -34,20 +90,20 @@ function HomePage() {
         {
           isGridlayout ?
             <div className='grid px-[100px]'>
-              <GridLayout/>
-              <GridLayout/>
-              <GridLayout/>
-              <GridLayout/>
-              <GridLayout/>
+                {
+                  data?data.map((item,index) =>{
+                     return <GridLayout key={index} item = {item}/>
+                  }) :" "
+                }
               
             </div>
             : <div className='list px-[100px]'>
                  
-                 <ListLayout/>
-                 <ListLayout/>
-                 <ListLayout/>
-                 <ListLayout/>
-                 <ListLayout/>
+                 {
+                  data?data.map((item,index) =>{
+                     return <GridLayout key={index} item = {item}/>
+                  }) :" "
+                }
             </div>
         }
 
@@ -66,7 +122,7 @@ function HomePage() {
               />
             </div>
             <div className='flex items-center gap-[10px] w-full mt-2'>
-              <button  className='btnBlue rounded-[5px] w-[49%] mb-4 !p-[5px] !px-[10px] !py-[10px]'>Create</button>
+              <button   onClick={createProj} className='btnBlue rounded-[5px] w-[49%] mb-4 !p-[5px] !px-[10px] !py-[10px]'>Create</button>
               <button onClick={() => { setIsCreateModelShow(false) }} className='btnBlue !bg-[#1A1919] rounded-[5px] mb-4 w-[49%] !p-[5px] !px-[10px] !py-[10px]'>Cancel</button>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import codeLogo from '../../Images/CodeLogo.jpg'
 import deletLogo from '../../Images/DeleteLogo.png'
-function ListLayout() {
+function ListLayout({item}) {
   const [isDeleteModelShow, setIsDeleteModelShow] = useState(false);
   return (
     <>
@@ -9,8 +9,8 @@ function ListLayout() {
          <div className='flex items-center gap-2'>
             <img src={codeLogo} alt="" className='w-[80px]'/>
             <div>
-            <h3 className='text-[20px]'>my Projects</h3>
-            <p className='text-[gray] text-[14px]'>Created in</p>
+            <h3 className='text-[20px]'>{item.title}</h3>
+            <p className='text-[gray] text-[14px]'>Created in {new Date(item.date).toDateString()}</p>
           </div>
          </div>
          <div>
