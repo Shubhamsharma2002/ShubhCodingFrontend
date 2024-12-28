@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import logo from '../../Images/Weblogo.png'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { MdLightMode } from "react-icons/md";
 import Avatar from 'react-avatar';
 import { BsGridFill } from "react-icons/bs";
 import { api_base_url, toggleClass } from '../../Helper.js';
-function Nav() {
+function Nav({ isGridLayout, setIsGridLayout }) {
   // const navigate = useNavigate();
 
   const [data, setData] = useState(null);
@@ -29,18 +29,26 @@ function Nav() {
       }
     })
   }, [])
+  const logout = () => {
+    localStorage.removeItem("userId");
+    localStorage.removeItem("token");
+    localStorage.removeItem("isLoggedIn");
+    window.location.reload();
+  }
   return (
     <>
     <div className="navbar flex items-center justify-between px-[100px] h-[80px] bg-[#141414]">
       <div className="logo">
+     
         <img className='w-[150px] cursor-pointer' src={logo} alt="" />
+       
       </div>
       <div className="links flex items-center gap-2">
         <Link>Home</Link>
         <Link>About</Link>
         <Link>Contact</Link>
         <Link>Services</Link>
-        <button  className='btnBlue !bg-red-500 min-w-[120px] ml-2 hover:!bg-red-600'>Logout</button>
+        <button onClick={logout} className='btnBlue !bg-red-500 min-w-[120px] ml-2 hover:!bg-red-600'>Logout</button>
         <Avatar onClick={() => { toggleClass(".dropDownNavbar", "hidden") }} name={data ? data.name : ""} size="40" round="50%" className=' cursor-pointer ml-2' />
       </div>
 
@@ -50,7 +58,8 @@ function Nav() {
         </div>
         
         <i className='flex items-center gap-2 mt-3 mb-2 cursor-pointer' style={{ fontStyle: "normal" }}><MdLightMode className='text-[20px]' /> Light mode</i>
-        <i  className='flex items-center gap-2 mt-3 mb-2 cursor-pointer' style={{ fontStyle: "normal" }}><BsGridFill className='text-[20px]' /> layout</i>
+        <i onClick={() => setIsGridLayout(!isGridLayout)} className='flex items-center gap-2 mt-3 mb-2 cursor-pointer' style={{ fontStyle: "normal" }}><BsGridFill className='text-[20px]' /> {isGridLayout ? "List" : "Grid"} layout</i>
+
       </div>
     </div>
   </>

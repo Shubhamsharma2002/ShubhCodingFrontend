@@ -1,5 +1,5 @@
 import React from 'react'
-import {BrowserRouter, Outlet, Route, Routes} from "react-router-dom";
+import {BrowserRouter, Navigate, Outlet, Route, Routes} from "react-router-dom";
 import './App.css'
 import Nav from './Components/Navbar/Nav';
 import Footer from './Components/Footer/Footer';
@@ -11,7 +11,7 @@ import EditorLayout from './Pages/Editor';
 
 
 function App() {
- 
+     let isLoggedIn = localStorage.getItem("isLoggedIn");
  return(
       <>
       
@@ -19,11 +19,11 @@ function App() {
    
        <Routes>
        
-        <Route path="/" element ={<HomePage />}></Route>
-        <Route path="*" element={<ErrorPage/>}></Route>
+        <Route path="/" element={isLoggedIn ? <HomePage /> : <Navigate to="/login"/>}></Route>
+        <Route path="*" element={isLoggedIn ? <ErrorPage />: <Navigate to="/login"/>}></Route>
         <Route path="/signup" element={<SignupPage/>}></Route>
         <Route path="/login" element={<LoginPage/>}></Route>
-        <Route path="/editor/:projectId" element={<EditorLayout/>}></Route>
+        <Route path="/editor/:projectId" element={isLoggedIn ? <EditorLayout /> : <Navigate to="/login"/>}></Route>
 
          
         

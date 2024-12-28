@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom'
 import { api_base_url } from '../Helper'
 
 function HomePage() {
-  const [isGridlayout , setgridLayout] = useState(true)
+ 
   const [isCreateModelShow, setIsCreateModelShow] = useState(false);
   const [projTitle, setProjTitle] = useState("");
   const [data, setData] = useState(null);
@@ -63,10 +63,10 @@ function HomePage() {
     getALLProj();
   }, []);
 
-
+  const [isGridLayout, setIsGridLayout] = useState(false);
   return (
     <>
-    <Nav/>
+    <Nav isGridLayout={isGridLayout} setIsGridLayout={setIsGridLayout}/>
     <div className='flex items-center justify-between px-[100px] my-[40px]'>
         <h2 className='text-2xl'>Hi, Shubham 👋</h2>
         <div className='flex items-center gap-1'>
@@ -88,7 +88,7 @@ function HomePage() {
       {/* project card layout */}
       <div className="cards">
         {
-          isGridlayout ?
+          isGridLayout?
             <div className='grid px-[100px]'>
                 {
                   data?data.map((item,index) =>{

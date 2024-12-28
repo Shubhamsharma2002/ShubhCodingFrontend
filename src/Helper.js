@@ -10,4 +10,5 @@ export const removeClass = (el,className) => {
   elem.classList.remove(className);
 };
 
+
 export const api_base_url = "http://localhost:5000/api/v1/"
